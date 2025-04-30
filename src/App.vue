@@ -194,6 +194,8 @@ h5 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .board {
   background-image: url('./assets/board.jpg');

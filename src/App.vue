@@ -1,27 +1,34 @@
 <template>
   <div class="board">
     <transition-group name="fade">
-      <Hex v-for="hexItem in hexList" :hexData="hexItem" :hexRadius="38.1" :key="`${hexItem.circle}-${hexItem.index}`" @click-hex="onClickHex(hexItem)"></Hex>
+      <Hex 
+        v-for="hexItem in hexList" 
+        :hexData="hexItem" 
+        :hexRadius="38.1" 
+        :selected-status="selectedStatus"
+        :key="`${hexItem.circle}-${hexItem.index}`" 
+        @click-hex="onClickHex(hexItem)"
+      ></Hex>
     </transition-group>
 
     <div class="board-footer" :style="'font-size: ' + 38.1 / 2.6 + 'px'">
       <button :style="'font-size: ' + 38.1 / 2.6 + 'px'" class="btn start" @click="newGame">NEW GAME</button>
       <div class="status-bar">
-        <status :status="status.salt"></status>
+        <status :status="status.salt" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <span class="status-divide">|</span>
-        <status :status="status.air"></status>
-        <status :status="status.fire"></status>
-        <status :status="status.water"></status>
-        <status :status="status.earth"></status>
+        <status :status="status.air" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.fire" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.water" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.earth" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <span class="status-divide">|</span>
-        <status :status="status.quicksilver"></status>
+        <status :status="status.quicksilver" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <span class="status-divide">|</span>
-        <status :status="status.lead"></status>
-        <status :status="status.tin"></status>
-        <status :status="status.iron"></status>
-        <status :status="status.copper"></status>
-        <status :status="status.silver"></status>
-        <status :status="status.gold"></status>
+        <status :status="status.lead" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.tin" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.iron" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.copper" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.silver" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.gold" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
       </div>
       <button class="btn help" @click="showHelp = true"></button>
       <div class="record">
@@ -58,6 +65,7 @@ export default {
       hexList: [],
       status: Game.getInitStatus(),
       winCount: 0,
+      selectedStatus: null,
     })
 
     const renderBoard = () => {
@@ -111,6 +119,14 @@ export default {
       game.solve()
     }
 
+    const onStatusClick = (statusType) => {
+      if (state.selectedStatus === statusType) {
+        state.selectedStatus = null
+      } else {
+        state.selectedStatus = statusType
+      }
+    }
+
     onMounted(() => {
       if (!localStorage.getItem('winCount')) {
         localStorage.setItem('winCount', 0)
@@ -131,6 +147,7 @@ export default {
       newGame,
       onClickHex,
       solve,
+      onStatusClick,
     }
   },
 }

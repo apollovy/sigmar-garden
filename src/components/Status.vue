@@ -1,12 +1,33 @@
 <template>
-  <div class="status-container" :style="`background-image: url('./atoms/${status.element}.png')`" :class="{ fade: status.count === 0 }">
+  <div 
+    class="status-container" 
+    :style="`background-image: url('./atoms/${status.element}.png')`" 
+    :class="{ 
+      fade: status.count === 0,
+      highlighted: isSelected
+    }"
+    @click="onClick"
+  >
     <span class="num-left" :class="{ warning: status.oddWarn && status.count % 2 === 1 }">{{ status.showCount ? status.count : '' }}</span>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['status']
+  props: {
+    status: Object,
+    selectedStatus: String
+  },
+  computed: {
+    isSelected() {
+      return this.selectedStatus === this.status.element
+    }
+  },
+  methods: {
+    onClick() {
+      this.$emit('status-click', this.status.element)
+    }
+  }
 }
 </script>
 
@@ -18,6 +39,8 @@ export default {
   height: 65%;
   width: 6.5%;
   position: relative;
+  cursor: pointer;
+  transition: filter 0.3s ease;
 }
 .status-container span {
   font-size: 80%;
@@ -31,5 +54,8 @@ export default {
 }
 .status-container.fade {
   filter: brightness(0.5);
+}
+.status-container.highlighted {
+  filter: brightness(1.5) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
 }
 </style>

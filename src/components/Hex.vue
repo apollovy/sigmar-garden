@@ -5,6 +5,7 @@
       active: hexData.active && hexData.pinball,
       selected: hexData.selected,
       shadow: hexData.pinball,
+      highlighted: isHighlighted
     }"
     :style="`
       top: calc(50% - ${hexRadius * 1.6}px);
@@ -21,7 +22,7 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 const getTransX = (circle, index, radius) => {
   if (index === 0 && circle === 0) {
     // 0, 0
@@ -108,14 +109,19 @@ export default {
   props: {
     hexData: Object,
     hexRadius: Number,
+    selectedStatus: String
   },
-  setup(props) {
-    const transX = getTransX(props.hexData.circle, props.hexData.index, props.hexRadius)
-    const transY = getTransY(props.hexData.circle, props.hexData.index, props.hexRadius)
-
-    return {
-      transX,
-      transY,
+  computed: {
+    transX() {
+      return getTransX(this.hexData.circle, this.hexData.index, this.hexRadius)
+    },
+    transY() {
+      return getTransY(this.hexData.circle, this.hexData.index, this.hexRadius)
+    },
+    isHighlighted() {
+      return this.selectedStatus && 
+             this.hexData.pinball && 
+             this.hexData.pinball.element === this.selectedStatus
     }
   },
 }
@@ -166,5 +172,9 @@ export default {
 }
 .hex-item.selected .atom-hover {
   opacity: 0.4;
+}
+.hex-item.highlighted {
+  filter: brightness(1.5) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+  transition: filter 0.3s ease;
 }
 </style>

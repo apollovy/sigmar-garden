@@ -4,15 +4,15 @@
       <Hex 
         v-for="hexItem in hexList" 
         :hexData="hexItem" 
-        :hexRadius="38.1" 
+        :hexRadius="hexRadius" 
         :selected-status="selectedStatus"
         :key="`${hexItem.circle}-${hexItem.index}`" 
         @click-hex="onClickHex(hexItem)"
       ></Hex>
     </transition-group>
 
-    <div class="board-footer" :style="'font-size: ' + 38.1 / 2.6 + 'px'">
-      <button :style="'font-size: ' + 38.1 / 2.6 + 'px'" class="btn start" @click="newGame">NEW GAME</button>
+    <div class="board-footer" :style="'font-size: ' + hexRadius / 2.6 + 'px'">
+      <button :style="'font-size: ' + hexRadius / 2.6 + 'px'" class="btn start" @click="newGame">NEW GAME</button>
       <div class="status-bar">
         <status :status="status.salt" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <span class="status-divide">|</span>
@@ -69,6 +69,7 @@ export default {
       status: Game.getInitStatus(),
       winCount: 0,
       selectedStatus: null,
+      hexRadius: 38.1,
     })
 
     const renderBoard = () => {
@@ -140,6 +141,14 @@ export default {
       game.updateEvent = () => {
         state.hexList = [...game.getFlatCoords()]
       }
+
+      const updateHexRadius = () => {
+        const boardWidth = document.querySelector('.board').offsetWidth
+        state.hexRadius = (boardWidth / 841) * 38.1 // 841 - это оригинальная ширина доски
+      }
+
+      updateHexRadius()
+      window.addEventListener('resize', updateHexRadius)
 
       newGame()
     })
@@ -293,6 +302,7 @@ h5 {
   color: #ada69c;
   filter: drop-shadow(0 2px 1px black);
   background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#524e4a), to(#ada69c));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

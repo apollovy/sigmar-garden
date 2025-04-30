@@ -21,6 +21,9 @@
         <status :status="status.water" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <status :status="status.earth" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <span class="status-divide">|</span>
+        <status :status="status.vitae" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <status :status="status.mors" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
+        <span class="status-divide">|</span>
         <status :status="status.quicksilver" :selected-status="selectedStatus" @status-click="onStatusClick"></status>
         <span class="status-divide">|</span>
         <status :status="status.lead" :selected-status="selectedStatus" @status-click="onStatusClick"></status>

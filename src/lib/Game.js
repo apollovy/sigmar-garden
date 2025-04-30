@@ -403,13 +403,13 @@ function getInitStatus() {
     vitae: {
       element: 'vitae',
       count: 0,
-      showCount: false,
+      showCount: true,
       oddWarn: false,
     },
     mors: {
       element: 'mors',
       count: 0,
-      showCount: false,
+      showCount: true,
       oddWarn: false,
     },
   }

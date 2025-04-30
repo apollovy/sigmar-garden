@@ -174,7 +174,18 @@ export default {
   opacity: 0.4;
 }
 .hex-item.highlighted {
-  filter: brightness(1.5) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
-  transition: filter 0.3s ease;
+  animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    filter: brightness(0.8) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+  }
+  50% {
+    filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 255, 255, 1));
+  }
+  100% {
+    filter: brightness(0.8) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+  }
 }
 </style>

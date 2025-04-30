@@ -181,6 +181,10 @@ h5 {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 .board {
   background-image: url('./assets/board.jpg');
